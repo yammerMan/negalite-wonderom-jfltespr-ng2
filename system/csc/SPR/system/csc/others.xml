@@ -1,0 +1,44 @@
+﻿<?xml  version="1.0" encoding="UTF-8" ?>
+<CustomerData>
+  <LatinIME>
+    <VibrateOn>on</VibrateOn>
+    <SoundOn>on</SoundOn>
+  </LatinIME>
+  <SamsungKeypad>
+		<xt9_enabled>off</xt9_enabled>
+		<French>off</French>
+		<Turkish>off</Turkish>
+		<Italiano>off</Italiano>
+		<doublespace>off</doublespace>
+		<Polski>off</Polski>
+		<Sound_on_keypress>off</Sound_on_keypress>
+		<recapture>off</recapture>
+		<spell_correction>on</spell_correction>
+		<Portuguese>off</Portuguese>
+		<select_language>1</select_language>
+		<usersymbollist>:-) ;-) :-( :'( :-o :-P </usersymbollist>
+		<voice_input>off</voice_input>
+		<Spanish>off</Spanish>
+		<auto_append>off</auto_append>
+		<Nederlands>off</Nederlands>
+		<word_completion>off</word_completion>
+		<word_completion_point>2</word_completion_point>
+		<next_word_prediction>on</next_word_prediction>
+		<Korean>off</Korean>
+		<Deutsch>off</Deutsch>
+		<English>on</English>
+		<auto_subtitution>off</auto_subtitution>
+		<regional_correction>off</regional_correction>
+		<KoreanOnly>off</KoreanOnly>
+		<Auto_capitalization>on</Auto_capitalization>
+  </SamsungKeypad>
+  
+    <DefaultInputMethod>
+    
+	<!-- 예) 삼성키패드 : com.sec.android.inputmethod -->
+	<!-- 예) Swype : com.swype.android.inputmethod -->
+	<!-- 예) Android Keyboard : com.android.inputmethod.latin -->
+	
+	<input_method>com.sec.android.inputmethod</input_method>
+  </DefaultInputMethod>
+</CustomerData>

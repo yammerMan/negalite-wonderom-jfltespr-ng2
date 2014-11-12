@@ -1,0 +1,13 @@
+<?xml  version="1.0" encoding="UTF-8" ?>
+<SW-Configuration>
+	<MobileData>
+	<PublicName>SPH-L720</PublicName>
+	</MobileData>
+	<CustomerDataSet>
+	<CSCName>L720SPT</CSCName>
+	<CSCVersion>FNG2</CSCVersion>
+	<NbCustomer>2</NbCustomer>
+	<CustomerData src="/Customer/SPR/customer.xml" />
+	<CustomerData src="/Customer/XAS/customer.xml" />
+	</CustomerDataSet>
+</SW-Configuration>

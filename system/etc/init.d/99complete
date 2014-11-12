@@ -1,0 +1,5 @@
+#!/system/bin/sh
+
+start /system/etc/adreno.conf
+
+sysctl -p

@@ -1,0 +1,430 @@
+###############################
+# Aroma Theme
+###############################
+
+ini_set("force_colorspace","rgba");
+
+theme("ics");
+
+#ini_set("dp","5");
+
+###############################
+# Welcome Splash
+###############################
+
+splash(4000, "wonderom");
+
+###############################
+# Font Size
+###############################
+
+loadlang("langs/en.lang");
+fontresload( "0", "ttf/Roboto-Regular.ttf;ttf/DroidSansFallback.ttf;", "8" );
+fontresload( "1", "ttf/Roboto-Regular.ttf;ttf/DroidSansFallback.ttf;", "12" );
+
+###############################
+# Name Variables
+###############################
+
+ini_set("rom_name",             "NegaLite WondeROM NG2");
+ini_set("rom_version",          "SVN Series");
+ini_set("rom_author",           "Negamann303");
+ini_set("rom_device",           "Galaxy S4");
+
+###############################
+# Aroma Script by Negamann303
+###############################
+#------------------------------
+###############################
+# Welcome Screen
+###############################
+
+viewbox(
+	"Welcome",
+	"\n\n\n\n\n"+
+	"You Are About To Flash\n"+
+	ini_get("rom_name") + " \nBy\n" + ini_get("rom_author") +
+	"\n\n\n"+
+	"Version: <#080>" + ini_get("rom_version") + "</#>\n"+
+	"Device: <#080>" + ini_get("rom_device") + "</#>\n\n\n"+
+	"Press Next To Continue The Installation...",
+	"icons/personalize"
+);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Restore Options Check
+###############################
+
+#############################################################
+# Aroma Backup/Restore System - Co-developed by Ramjet73
+#############################################################
+
+#run_program("/sbin/busybox", "mount", "/data");
+#zipexec("setup/chkdir.sh");
+#setvar("chkdir",read("/tmp/chkdir.txt"));
+#run_program("/sbin/sleep", "1");
+
+#if (getvar("chkdir") == "yes")
+#	then
+#	selectbox(
+#	"Aroma Backup Detection",
+#	"Aroma Backup Detected! Would You Like To Restore Your Previous Installation Options?",
+#	"icons/reboot",
+#	"restore.prop",
+#	"Yes","Use My Previous Installation Options",1,
+#	"Modify/Review","Modify Or Review My Previous Installation Options",0,
+#	"No","No Thanks, I'm Starting Over",0
+#	);
+#
+#	if
+#		file_getprop("/tmp/aroma-data/restore.prop","selected.0") != "3"
+#	then
+#		zipexec("setup/backup/restore.sh");
+#	endif;
+#endif;
+
+#if
+#	file_getprop("/tmp/aroma-data/restore.prop","selected.0") == "2"
+#then
+#	ini_set("text_next", "Modify");
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Review
+###############################
+
+#	if
+#		zipexec("setup/review.sh") == "0"
+#	then
+#		setcolor("textfg", "#09f");
+#		exec("/sbin/sleep", "1");
+#		textbox(
+#			"Review And Modify",
+#			"Press 'Modify' To Modify Your Backup Options And Install, Or 'Back' For Other Options",
+#			"icons/info",
+#			read("/tmp/review.txt")
+#		);
+#	endif;
+#	ini_set("text_next", "Next");
+#	setcolor("textfg", "#fff");
+#endif;
+#
+#if
+#	file_getprop("/tmp/aroma-data/restore.prop","selected.0") != "1"
+#then
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Data Wipe Options
+###############################
+
+	selectbox(
+		"Data Wipe Options",
+		"Would You Like To Wipe Data?",
+		"icons/wipe",
+		"wipe.prop",
+
+		"Safe Wipe","Wipe All data Except Internal SD",1,
+		"No Wipe","Skip This, I'm Merely Updating",0
+	);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Launcher Options
+###############################
+
+	appendvar("installmsg","\n\nPlease Select TouchWiz Launcher Below:");
+
+	selectbox(
+		"Launcher Selection:",
+		"Choose Which TouchWiz Launcher You Would Like",
+		"icons/touchwiz",
+		"launcher.prop",
+
+		"Stock","4x4 Home-Screen, 4x5 App-Drawer",0,
+		"4x5-5x6","4x5 Home-Screen, 5x6 App-Drawer",1
+	);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Xposed Options
+###############################	
+	
+	appendvar("installmsg","\n\nPlease Select Xposed Mod Add-ons Below:");
+	
+	checkbox(
+		"Xposed Mod Add-ons",
+		"Please Select Your Options And Press 'Next' To Continue:",
+		"icons/apps",
+		"xposed.prop",
+
+		"Call Blocker","",0,
+		"Disable MMS Lockscreen Notification","",0,
+		"National Roaming","",0,
+		"Smooth Progress Bar","",0,
+		"X-Toast","",0,
+		"Youtube Adaway","",0
+	);
+	
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Kernel Options
+###############################
+
+	appendvar("installmsg","\n\nPlease Select Kernel Below:");
+
+	selectbox(
+		"Kernel Selection:",
+		"Choose Which Kernel You Would Like",
+		"icons/kernel",
+		"kernel.prop",
+
+		"Negalite NG2 Kernel","",1,
+		"Stock NG2 Kernel","",0
+	);
+	
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Performance Options
+###############################
+
+	appendvar("installmsg","\n\nPlease Select Performance Settings Below:");
+
+	selectbox(
+		"Performance Selection:",
+		"Choose Which Preference You Would Like",
+		"icons/performance",
+		"performance.prop",
+
+		"Low Performance","Best Battery - 1.89GHz",0,
+		"Mixed Performance","Mixed Battery/Performance - 1.98GHz",1,
+		"High Performance","Best Performance - 2.16GHz",0
+	);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Graphics Options
+###############################
+
+	appendvar("installmsg","\n\nPlease Select Graphics Settings Below:");
+
+	selectbox(
+		"Graphics Selection:",
+		"Choose Which Graphics Preference You Would Like",
+		"icons/screen",
+		"graphics.prop",
+
+		"Quality","Great For Gamers",1,
+		"Performance","For Those Who Crave Performance",0
+	);
+	
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Add-on App Options
+###############################
+
+	checkbox(
+		"Add-on System Apps - User",
+		"Please Select Your Options And Press 'Next' To Continue:",
+		"icons/apps",
+		"sysapps.prop",
+
+		"Adobe Reader","",0,
+	 	"Facebook","",1,
+		"Flash Player","",1,
+		"Google+","",1,
+		"Google Chrome","",1,
+		"Google Hangouts","",1,
+		"Google Mail","",1,
+		"Google Maps","",1,
+		"Google Now","",1,
+		"Google Videos","",0,
+		"Google Voice","",0,
+		"YouTube","",1
+	);
+
+	checkbox(
+		"Add-on Optional Apps - User",
+		"Please Select Your Options And Press 'Next' To Continue:",
+		"icons/apps",
+		"apps.prop",
+
+		"AdAway","",1,
+		"Android Terminal","",1,
+		"Cache Cleaner NG","",1,
+	 	"FX File Explorer","",1,
+		"GPS Status","",1,
+		"MX Player","",0,
+		"Playstation Mobile","",0,
+		"Script-Manager","",0,
+		"Android Tuner","",0,
+		"Titanium Backup","",0,
+		"Ultimate Backup","",0,
+		"Volume Sync","",1,
+		"Wifi Tether","",1
+	);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Summary
+###############################
+
+#	if
+#		file_getprop("/tmp/aroma-data/restore.prop","selected.0") != "3"
+#	then
+#		if
+#			zipexec("setup/review.sh") == "0"
+#		then
+#			setcolor("textfg", "#09f");
+#			exec("/sbin/sleep", "1");
+#			textbox(
+#				"Selection Summary",
+#				"Press 'Next' To Continue, Or 'Back' To Change Settings",
+#				"icons/info",
+#				read("/tmp/summary.txt")
+#			);
+#			setcolor("textfg", "#fff");
+#		endif;
+#	endif;
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Backup Aroma Settings
+###############################
+
+#	if
+#		file_getprop("/tmp/aroma-data/restore.prop","selected.0") != "1"
+#	then
+#		appendvar("installmsg","\n\nAroma Backup:");
+#
+#		selectbox(
+#			"Backup Aroma Options",
+#			"Would You Like To Backup Aroma Options for future auto installation?",
+#			"icons/reboot",
+#			"backup.prop",
+#
+#			"Yes","Backup Aroma Options",1,
+#			"No","My Preference Always Changes",0
+#		);
+#	endif;
+#
+#	if
+#		file_getprop("/tmp/aroma-data/backup.prop","selected.0") == "1"
+#	then
+#		alert(
+#		"Backup Saved",
+#		"Backup Settings Saved! Click 'OK' To Continue",
+#		"icons/alert",
+#		"OK"
+#		);
+#	endif;
+#endif;
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Install Rom - Execute Updater-Script
+###############################
+
+alert(
+	"Ready To Install",
+	"Aroma Settings Saved, Now Let Us Install This Monster of a Rom!",
+	"icons/alert",
+	"OK"
+ );
+
+install(
+	"Installing",
+	"Please Wait...",
+	"icons/install",
+	"Finished, Press 'Next'"
+);
+
+ini_set("text_next", "Done");
+
+viewbox(
+	"Installation Completed",
+	"<#080>Congratulations...</#>\n\n"+
+	ini_get("rom_name") + " " + ini_get("rom_version") + " Has Been Installed Successfully.\n\n"+
+	"Enjoy!",
+	"icons/info"
+);
+
+ini_set("text_next", "Finished");
+
+###############################
+# Backup and Logs
+###############################
+
+run_program("/tmp/logs.sh");
+if file_getprop("/tmp/aroma-data/backup.prop","selected.0") == "1" then
+	run_program("/tmp/backup.sh");
+endif;
+
+run_program("/sbin/busybox", "umount", "/data");
+run_program("/sbin/sleep", "1");
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Reboot Options
+###############################
+
+selectbox(
+	"Reboot?",
+	"Would You Like To Reboot Immediately?",
+	"icons/reboot",
+	"reboot.prop",
+
+	"Reboot To System","",1,
+	"Reboot Recovery","",0,
+	"No Reboot","",0
+ );
+ 
+if
+	file_getprop("/tmp/aroma-data/reboot.prop","selected.0") != "3"
+then
+	run_program("/tmp/reboot.sh");
+endif;
+
+###############################
+# END
+###############################

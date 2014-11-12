@@ -1,0 +1,742 @@
+set_progress(0.00);
+
+###############################
+# Negalite WondeROM Installer
+###############################
+ui_print("@!!!Negalite WondeROM updater-script!!!");
+ui_print(" ");
+
+mount("ext4", "EMMC", "/dev/block/mmcblk0p16", "/system");
+mount("ext4", "EMMC", "/dev/block/mmcblk0p18", "/cache");
+mount("ext4", "EMMC", "/dev/block/mmcblk0p29", "/data");
+
+package_extract_dir("setup", "/tmp");
+set_perm(0, 0, 0777, "/tmp/backup.sh");
+set_perm(0, 0, 0777, "/tmp/makedata.sh");
+set_perm(0, 0, 0777, "/tmp/makemodule.sh");
+set_perm(0, 0, 0777, "/tmp/logs.sh");
+set_perm(0, 0, 0777, "/tmp/reboot.sh");
+set_perm(0, 0, 0777, "/tmp/restore.sh");
+set_perm(0, 0, 0777, "/tmp/review.sh");
+set_perm(0, 0, 0777, "/tmp/wipedata.sh");
+set_perm(0, 0, 0777, "/tmp/performance_buildprops.sh");
+set_perm(0, 0, 0777, "/tmp/quality_buildprops.sh");
+set_progress(0.025);
+
+ui_print("@Wiping Partitions");
+if file_getprop("/tmp/aroma-data/wipe.prop","selected.0") == "1" then
+	ui_print("@-Erasing Data Partition Excluding Internal SD");
+	run_program("/tmp/wipedata.sh");
+	delete_recursive("/sd-ext");
+	delete_recursive("/sdcard/Android");
+	delete_recursive("/sdcard/.face");
+	delete_recursive("/sdcard/LOST.DIR");
+	delete_recursive("/sdcard/.android_secure");
+	delete_recursive("/storage/sdcard1/LOST.DIR");
+	delete_recursive("/storage/sdcard1/.android_secure");
+	run_program("/sbin/sleep", "1");
+endif;
+
+if file_getprop("/tmp/aroma-data/wipe.prop","selected.0") == "2" then
+	ui_print("@-Skipping Data Partition Wipe");
+	delete_recursive("/data/dalvik-cache");
+	run_program("/sbin/sleep", "1");
+endif;
+set_progress(0.050);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# System Format And Install
+###############################
+
+ui_print("@-Erasing System Partition");
+delete_recursive("/system");
+delete_recursive("/preload/symlink/system/app");
+run_program("/sbin/sleep", "1");
+ui_print("Done");
+set_progress(0.100);
+
+ui_print(" ");
+ui_print("@Installing To System");
+package_extract_dir("system", "/system");
+ui_print("Done");
+run_program("/sbin/sleep", "1");
+set_progress(0.150);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Make Data
+###############################
+
+run_program("/tmp/makedata.sh");
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# TouchWiz Launcher Installation
+###############################
+
+if file_getprop("/tmp/aroma-data/launcher.prop","selected.0") == "1" then
+	ui_print(" ");
+	ui_print("@Installing Stock TouchWiz Launcher");
+	package_extract_dir("launcher/touchwiz/4x4_4x5", "/system");
+	run_program("/sbin/sleep", "1");
+	ui_print("Done");
+endif;
+
+if file_getprop("/tmp/aroma-data/launcher.prop","selected.0") == "2" then
+	ui_print(" ");
+	ui_print("@Installing 4x5_5x6 TouchWiz Launcher");
+	package_extract_dir("launcher/touchwiz/4x5_5x6", "/system");
+	run_program("/sbin/sleep", "1");
+	ui_print("Done");
+endif;
+set_progress(0.200);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Wanam Xposed Mod
+###############################
+
+ui_print(" ");
+ui_print("@Installing Xposed Mods");
+package_extract_file("mod_xposed/xposed_installer/de.robv.android.xposed.installer.apk", "/system/app/de.robv.android.xposed.installer.apk");
+package_extract_file("mod_xposed/wanam_xposed/ma.wanam.xposed.apk", "/system/app/ma.wanam.xposed.apk");
+package_extract_dir("mod_xposed/wanam_xposed/sdcard", "/data/media/0");
+ui_print("Done");
+run_program("/sbin/sleep", "1");
+set_progress(0.300);
+
+ui_print(" ");
+ui_print("@Installing Xposed Add-ons - If Any");
+if file_getprop("/tmp/aroma-data/xposed.prop","item.0.1") == "1" then
+	ui_print("@-Installing Call Blocker");
+	package_extract_file("mod_xposed/call_blocker/com.mohammadag.xposedcallblocker.apk", "/system/app/com.mohammadag.xposedcallblocker.apk");
+endif;
+if file_getprop("/tmp/aroma-data/xposed.prop","item.0.2") == "1" then
+	ui_print("@-Installing Disabled MMS Lockscreen Notification");
+	package_extract_file("mod_xposed/mms_lockscreen_notify/DisableSamsungLockscreenNotifications.apk", "/system/app/DisableSamsungLockscreenNotifications.apk");
+endif;
+if file_getprop("/tmp/aroma-data/xposed.prop","item.0.3") == "1" then
+	ui_print("@-Installing National Roaming");
+	package_extract_file("mod_xposed/national_roaming/NationalRoaming.apk", "/system/app/NationalRoaming.apk");
+endif;
+if file_getprop("/tmp/aroma-data/xposed.prop","item.0.4") == "1" then
+	ui_print("@-Installing Smooth Progress Bar");
+	package_extract_file("mod_xposed/progress_bar/com.mohammadag.smoothsystemprogressbars.apk", "/system/app/com.mohammadag.smoothsystemprogressbars.apk");
+endif;
+if file_getprop("/tmp/aroma-data/xposed.prop","item.0.5") == "1" then
+	ui_print("@-Installing X-Toast");
+	package_extract_file("mod_xposed/x_toast/com.vikas.toaststyler.apk", "/system/app/com.vikas.toaststyler.apk");
+endif;
+if file_getprop("/tmp/aroma-data/xposed.prop","item.0.6") == "1" then
+	ui_print("@-Installing Youtube Adaway");
+	package_extract_file("mod_xposed/youtube_adaway/ma.wanam.youtubeadaway.apk", "/system/app/ma.wanam.youtubeadaway.apk");
+endif;
+ui_print("Done");
+run_program("/sbin/sleep", "1");
+set_progress(0.350);
+
+package_extract_file("applications_optional_system/com.gmail.rlorange.turbozram.apk", "/data/app/com.gmail.rlorange.turbozram.apk");
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Graphics Settings
+###############################
+
+if file_getprop("/tmp/aroma-data/graphics.prop","selected.0") == "1" then
+	ui_print(" ");
+	ui_print("@Installing Quality Graphics Settings");
+	package_extract_file("performance/graphics/adreno_quality.conf", "/system/etc/adreno.conf");
+	set_perm(0, 0, 0755, "/system/etc/adreno.conf");
+	run_program("/tmp/quality_buildprops.sh");
+	ui_print("Done");
+	run_program("/sbin/sleep", "1");
+endif;
+
+if file_getprop("/tmp/aroma-data/graphics.prop","selected.0") == "2" then
+	ui_print(" ");
+	ui_print("@Installing Performance Graphics Settings");
+	package_extract_file("performance/graphics/adreno_performance.conf", "/system/etc/adreno.conf");
+	set_perm(0, 0, 0755, "/system/etc/adreno.conf");
+	run_program("/tmp/performance_buildprops.sh");
+	ui_print("Done");
+	run_program("/sbin/sleep", "1");
+endif;
+set_progress(0.450);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Viper4Android xHifi
+###############################
+
+ui_print(" ");
+ui_print("@Installing Viper4Android FX");
+package_extract_file("sound/com.vipercn.viper4android_v2.apk", "/system/priv-app/com.vipercn.viper4android_v2.apk");
+package_extract_file("sound/audio_effects.conf", "/system/etc/audio_effects.conf");
+package_extract_file("sound/libv4a_fx_ics.so", "/system/lib/soundfx/libv4a_fx_ics.so");
+set_perm(0, 0, 0755, "/system/etc/audio_effects.conf");
+ui_print("Done");
+run_program("/sbin/sleep", "1");
+set_progress(0.475);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Samsung keyboard Installation
+###############################
+
+package_extract_dir("keyboard/s_ime", "/system");
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# System Apps
+###############################
+
+ui_print(" ");
+ui_print("@Installing Add-on Apps - If Any");
+
+if file_getprop("/tmp/aroma-data/sysapps.prop","item.0.1") == "1" then
+	ui_print("@-Installing Adobe Reader");
+	package_extract_file("applications_optional_system/com.adobe.reader.apk", "/data/app/com.adobe.reader.apk");
+endif;
+
+if file_getprop("/tmp/aroma-data/sysapps.prop","item.0.2") == "1" then
+	ui_print("@-Installing Facebook");
+	package_extract_file("applications_optional_system/com.facebook.katana.apk", "/system/app/com.facebook.katana.apk");
+	package_extract_file("applications_optional_system/com.facebook.orca.apk", "/system/app/com.facebook.orca.apk");	
+endif;
+
+if file_getprop("/tmp/aroma-data/sysapps.prop","item.0.3") == "1" then
+	ui_print("@-Installing Flash Player");
+	package_extract_file("applications_optional_system/com.adobe.flashplayer.apk", "/data/app/com.adobe.flashplayer.apk");
+endif;
+
+if file_getprop("/tmp/aroma-data/sysapps.prop","item.0.4") == "1" then
+	ui_print("@-Installing Google+");
+	package_extract_file("applications_optional_system/com.google.android.apps.plus.apk", "/data/app/com.google.android.apps.plus.apk");
+endif;
+
+if file_getprop("/tmp/aroma-data/sysapps.prop","item.0.5") == "1" then
+	ui_print("@-Installing Google Chrome");
+	package_extract_file("applications_optional_system/com.android.chrome.apk", "/system/app/com.android.chrome.apk");
+	package_extract_dir("applications_optional_system/app_lib/chrome", "/system/lib");
+endif;
+
+if file_getprop("/tmp/aroma-data/sysapps.prop","item.0.6") == "1" then
+	ui_print("@-Installing Google Hangouts");
+	package_extract_file("applications_optional_system/com.google.android.talk.apk", "/system/app/com.google.android.talk.apk");
+	package_extract_dir("applications_optional_system/app_lib/hangouts", "/system/lib");
+endif;
+
+if file_getprop("/tmp/aroma-data/sysapps.prop","item.0.7") == "1" then
+	ui_print("@-Installing Google Mail");
+	package_extract_file("applications_optional_system/com.google.android.gm.apk", "/system/app/com.google.android.gm.apk");
+endif;
+
+if file_getprop("/tmp/aroma-data/sysapps.prop","item.0.8") == "1" then
+	ui_print("@-Installing Google Maps");
+	package_extract_file("applications_optional_system/com.google.android.apps.maps.apk", "/system/app/com.google.android.apps.maps.apk");
+	package_extract_dir("applications_optional_system/app_lib/gmaps", "/system/lib");
+endif;
+
+if file_getprop("/tmp/aroma-data/sysapps.prop","item.0.9") == "1" then
+	ui_print("@-Installing Google Now");
+	package_extract_file("applications_optional_system/com.google.android.googlequicksearchbox.apk", "/data/app/com.google.android.googlequicksearchbox.apk");
+	package_extract_dir("applications_optional_system/app_lib/gnow", "/system/lib");
+endif;
+
+if file_getprop("/tmp/aroma-data/sysapps.prop","item.0.10") == "1" then
+	ui_print("@-Installing Google Videos");
+	package_extract_file("applications_optional_system/com.google.android.videos.apk", "/system/app/com.google.android.videos.apk");
+	package_extract_dir("applications_optional_system/app_lib/gvideos", "/system/lib");
+endif;
+
+if file_getprop("/tmp/aroma-data/sysapps.prop","item.0.11") == "1" then
+	ui_print("@-Installing Google Voice");
+	package_extract_file("applications_optional_system/com.google.android.apps.googlevoice.apk", "/system/app/com.google.android.apps.googlevoice.apk");
+endif;
+
+if file_getprop("/tmp/aroma-data/sysapps.prop","item.0.12") == "1" then
+	ui_print("@-Installing YouTube");
+	package_extract_file("applications_optional_system/com.google.android.youtube.apk", "/system/app/com.google.android.youtube.apk");
+endif;
+
+run_program("/sbin/sleep", "1");
+set_progress(0.500);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Optional Apps
+###############################
+
+if file_getprop("/tmp/aroma-data/apps.prop","item.0.1") == "1" then
+	ui_print("@-Installing AdAway");
+	package_extract_file("applications_optional/org.adaway.apk", "/system/app/org.adaway.apk");
+endif;
+
+if file_getprop("/tmp/aroma-data/apps.prop","item.0.2") == "1" then
+	ui_print("@-Installing Android Terminal");
+	package_extract_file("applications_optional/jackpal.androidterm.apk", "/data/app/jackpal.androidterm.apk");
+endif;
+
+if file_getprop("/tmp/aroma-data/apps.prop","item.0.3") == "1" then
+	ui_print("@-Installing Cache Cleaner NG");
+	package_extract_file("applications_optional/org.lsartory.cachecleaner.ng.apk", "/system/app/org.lsartory.cachecleaner.ng.apk");
+endif;
+
+if file_getprop("/tmp/aroma-data/apps.prop","item.0.4") == "1" then
+	ui_print("@-Installing FX File Explorer");
+	package_extract_file("applications_optional/nextapp.fx.apk", "/system/app/nextapp.fx.apk");
+	package_extract_file("applications_optional/nextapp.fx.rr.apk", "/system/app/nextapp.fx.rr.apk");
+endif;
+
+if file_getprop("/tmp/aroma-data/apps.prop","item.0.5") == "1" then
+	ui_print("@-Installing GPS Status");
+	package_extract_file("applications_optional/com.eclipsim.gpsstatus2", "/system/app/com.eclipsim.gpsstatus2");
+endif;
+
+if file_getprop("/tmp/aroma-data/apps.prop","item.0.6") == "1" then
+	ui_print("@-Installing MX Player");
+	package_extract_file("applications_optional/com.mxtech.videoplayer.ad.apk", "/system/app/com.mxtech.videoplayer.ad.apk");
+	package_extract_file("applications_optional/com.mxtech.ffmpeg.v7_neon.apk", "/data/app/com.mxtech.ffmpeg.v7_neon.apk");
+endif;
+
+if file_getprop("/tmp/aroma-data/apps.prop","item.0.7") == "1" then
+	ui_print("@-Installing Playstation Mobile");
+	package_extract_file("applications_optional/com.playstation.psstore.apk", "/data/app/com.playstation.psstore.apk");
+endif;
+
+if file_getprop("/tmp/aroma-data/apps.prop","item.0.8") == "1" then
+	ui_print("@-Installing Script-Manager");
+	package_extract_file("applications_optional/os.tools.scriptmanager.apk", "/data/app/os.tools.scriptmanager.apk");
+endif;
+
+if file_getprop("/tmp/aroma-data/apps.prop","item.0.9") == "1" then
+	ui_print("@-Installing Android Tuner");
+	package_extract_file("applications_optional/ccc71.at.free.apk", "/data/app/ccc71.at.free.apk");
+endif;
+
+if file_getprop("/tmp/aroma-data/apps.prop","item.0.10") == "1" then
+	ui_print("@-Installing Titanium Backup");
+	package_extract_file("applications_optional/com.keramidas.TitaniumBackup.apk", "/data/app/com.keramidas.TitaniumBackup.apk");
+endif;
+
+if file_getprop("/tmp/aroma-data/apps.prop","item.0.11") == "1" then
+	ui_print("@-Installing Ultimate Backup");
+	package_extract_file("applications_optional/com.jrummy.app.managerfree.apk", "/data/app/com.jrummy.app.managerfree.apk");
+endif;
+
+if file_getprop("/tmp/aroma-data/apps.prop","item.0.12") == "1" then
+	ui_print("@-Installing Volume Sync");
+	package_extract_file("applications_optional/com.jestasfunhouse.volumesync.apk", "/system/app/com.jestasfunhouse.volumesync.apk");
+endif;
+
+if file_getprop("/tmp/aroma-data/apps.prop","item.0.13") == "1" then
+	ui_print("@-Installing Wifi Tether");
+	package_extract_file("applications_optional/com.googlecode.android.wifi.tether.apk", "/data/app/com.googlecode.android.wifi.tether.apk");
+endif;
+
+ui_print("Done");
+run_program("/sbin/sleep", "1");
+set_progress(0.550);
+
+ui_print(" ");
+ui_print("@Installing User Apps - If Any");
+package_extract_dir("user_apps/system", "/system/app");
+package_extract_dir("user_apps/data", "/data/app");
+ui_print("Done");
+run_program("/sbin/sleep", "1");
+set_progress(0.600);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# SymLinks
+###############################
+
+ui_print(" ");
+ui_print("@Creating Symlinks");
+symlink("Roboto-Bold.ttf", "/system/fonts/DroidSans-Bold.ttf");
+symlink("Roboto-Regular.ttf", "/system/fonts/DroidSans.ttf");
+symlink("mksh", "/system/bin/sh");
+symlink("wiperiface_v02", "/system/bin/wiperiface");
+symlink("dumpstate", "/system/bin/dumpcrash");
+symlink("libGLESv2.so", "/system/lib/libGLESv3.so");
+symlink("/system/bin/mksh", "/system/bin/sh");
+symlink("/system/xbin/zip","/system/bin/zip");
+symlink("/system/xbin/zipalign","/system/bin/zipalign");
+symlink("debuggerd", "/system/bin/csview");
+symlink("dumpstate", "/system/bin/dumpcrash");
+ui_print("Done");
+run_program("/sbin/sleep", "1");
+set_progress(0.650);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Toolbox
+###############################
+
+ui_print(" ");
+ui_print("@Symlinking Toolbox");
+symlink("toolbox", "/system/bin/cat");
+symlink("toolbox", "/system/bin/chmod");
+symlink("toolbox", "/system/bin/chown");
+symlink("toolbox", "/system/bin/cmp");
+symlink("toolbox", "/system/bin/date");
+symlink("toolbox", "/system/bin/dd");
+symlink("toolbox", "/system/bin/df");
+symlink("toolbox", "/system/bin/dmesg");
+symlink("toolbox", "/system/bin/getevent");
+symlink("toolbox", "/system/bin/getprop");
+symlink("toolbox", "/system/bin/hd");
+symlink("toolbox", "/system/bin/id");
+symlink("toolbox", "/system/bin/ifconfig");
+symlink("toolbox", "/system/bin/iftop");
+symlink("toolbox", "/system/bin/insmod");
+symlink("toolbox", "/system/bin/ioctl");
+symlink("toolbox", "/system/bin/ionice");
+symlink("toolbox", "/system/bin/kill");
+symlink("toolbox", "/system/bin/ln");
+symlink("toolbox", "/system/bin/log");
+symlink("toolbox", "/system/bin/ls");
+symlink("toolbox", "/system/bin/lsmod");
+symlink("toolbox", "/system/bin/lsof");
+symlink("toolbox", "/system/bin/mkdir");
+symlink("toolbox", "/system/bin/mount");
+symlink("toolbox", "/system/bin/mv");
+symlink("toolbox", "/system/bin/nandread");
+symlink("toolbox", "/system/bin/netstat");
+symlink("toolbox", "/system/bin/newfs_msdos");
+symlink("toolbox", "/system/bin/notify");
+symlink("toolbox", "/system/bin/printenv");
+symlink("toolbox", "/system/bin/ps");
+symlink("toolbox", "/system/bin/reboot");
+symlink("toolbox", "/system/bin/renice");
+symlink("toolbox", "/system/bin/rm");
+symlink("toolbox", "/system/bin/rmdir");
+symlink("toolbox", "/system/bin/rmmod");
+symlink("toolbox", "/system/bin/route");
+symlink("toolbox", "/system/bin/schedtop");
+symlink("toolbox", "/system/bin/sendevent");
+symlink("toolbox", "/system/bin/setconsole");
+symlink("toolbox", "/system/bin/setprop");
+symlink("toolbox", "/system/bin/sleep");
+symlink("toolbox", "/system/bin/smd");
+symlink("toolbox", "/system/bin/start");
+symlink("toolbox", "/system/bin/stop");
+symlink("toolbox", "/system/bin/sync");
+symlink("toolbox", "/system/bin/top");
+symlink("toolbox", "/system/bin/touch");
+symlink("toolbox", "/system/bin/umount");
+symlink("toolbox", "/system/bin/uptime");
+symlink("toolbox", "/system/bin/vmstat");
+symlink("toolbox", "/system/bin/watchprops");
+symlink("toolbox", "/system/bin/wipe");
+symlink("toolbox", "/system/bin/chcon");
+symlink("toolbox", "/system/bin/setenforce");
+symlink("toolbox", "/system/bin/grep");
+symlink("toolbox", "/system/bin/runcon");
+symlink("toolbox", "/system/bin/touchinput");
+symlink("toolbox", "/system/bin/md5");
+symlink("toolbox", "/system/bin/getsebool");
+symlink("toolbox", "/system/bin/setsebool");
+symlink("toolbox", "/system/bin/restorecon");
+symlink("toolbox", "/system/bin/getenforce");
+symlink("toolbox", "/system/bin/load_policy");
+symlink("toolbox", "/system/bin/cp");
+symlink("toolbox", "/system/bin/playback");
+symlink("toolbox", "/system/bin/du");
+symlink("toolbox", "/system/bin/playback");
+symlink("toolbox", "/system/bin/mkswap", "/system/bin/readlink",
+        "/system/bin/swapoff",
+        "/system/bin/swapon");
+ui_print("Done");
+run_program("/sbin/sleep", "1");
+set_progress(0.700);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# BusyBox
+###############################
+
+ui_print(" ");
+ui_print("@Installing Busybox");
+set_perm(0, 1000, 0755, "/system/xbin/busybox");
+symlink("/system/xbin/busybox", "/system/bin/busybox");
+run_program("/system/xbin/busybox", "--install", "-s", "/system/xbin");
+ui_print("Done");
+run_program("/sbin/sleep", "1");
+set_progress(0.750);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Kernel Installation
+###############################
+
+run_program("/tmp/makemodule.sh");
+
+if file_getprop("/tmp/aroma-data/kernel.prop","selected.0") == "1" then
+	ui_print(" ");
+	ui_print("@Installing Negalite NG2 Kernel");
+	package_extract_dir("kernel/negalite_ng2_kernel/modules", "/system/lib/modules");
+	run_program("/sbin/sleep", "1");
+	package_extract_file("kernel/negalite_ng2_kernel/kernel/boot.img", "/dev/block/platform/msm_sdcc.1/by-name/boot");
+	run_program("/sbin/sleep", "1");
+	ui_print("Done");
+endif;
+
+if file_getprop("/tmp/aroma-data/kernel.prop","selected.0") == "2" then
+	ui_print(" ");
+	ui_print("@Installing Stock NG2 Kernel");
+	package_extract_dir("kernel/stock_kernel/modules", "/system/lib/modules");
+	run_program("/sbin/sleep", "1");
+	package_extract_file("kernel/stock_kernel/kernel/boot.img", "/dev/block/platform/msm_sdcc.1/by-name/boot");
+	run_program("/sbin/sleep", "1");
+	ui_print("Done");
+endif;
+set_progress(0.800);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Performance Settings
+###############################
+
+if file_getprop("/tmp/aroma-data/performance.prop","selected.0") == "1" then
+	ui_print(" ");
+	ui_print("@Installing Low Performance Settings");
+	package_extract_file("performance/system/battery_post-init.sh", "/system/etc/post-init.sh");
+	set_perm(0, 0, 0755, "/system/etc/init.qcom.post_boot.sh");
+	ui_print("Done");
+	run_program("/sbin/sleep", "1");
+endif;
+
+if file_getprop("/tmp/aroma-data/performance.prop","selected.0") == "2" then
+	ui_print(" ");
+	ui_print("@Installing Mixed Performance Settings");
+	package_extract_file("performance/system/mixed_post-init.sh", "/system/etc/post-init.sh");
+	set_perm(0, 0, 0755, "/system/etc/init.qcom.post_boot.sh");
+	ui_print("Done");
+	run_program("/sbin/sleep", "1");
+endif;
+
+if file_getprop("/tmp/aroma-data/performance.prop","selected.0") == "3" then
+	ui_print(" ");
+	ui_print("@Installing High Performance Settings");
+	package_extract_file("performance/system/performance_post-init.sh", "/system/etc/post-init.sh");
+	set_perm(0, 0, 0755, "/system/etc/init.qcom.post_boot.sh");
+	ui_print("Done");
+	run_program("/sbin/sleep", "1");
+endif;
+set_perm(0, 0, 0777, "/system/etc/post-init.sh");
+set_progress(0.825);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Permissions
+###############################
+
+ui_print(" ");
+ui_print("@Setting Permissions");
+set_perm_recursive(0, 0, 0755, 0644, "/system");
+set_perm_recursive(0, 2000, 0755, 0755, "/system/bin");
+set_perm(0, 3003, 02750, "/system/bin/netcfg");
+set_perm(0, 0, 0755, "/system/bin/ping");
+set_perm(0, 2000, 0750, "/system/bin/run-as");
+set_perm(1014, 2000, 0550, "/system/etc/dhcpcd/dhcpcd-run-hooks");
+set_perm_recursive(0, 0, 0755, 0555, "/system/etc/ppp");
+set_perm(0, 2000, 0755, "/system/vendor");
+set_perm(0, 2000, 0755, "/system/vendor/firmware");
+set_perm(0, 2000, 0755, "/system/vendor/lib");
+set_perm(0, 2000, 0755, "/system/vendor/lib/egl");
+set_perm(0, 2000, 0755, "/system/vendor/lib/hw");
+set_perm_recursive(0, 2000, 0755, 0644, "/system/vendor/lib/mediadrm");
+set_perm(0, 0, 0644, "/system/vendor/lib/mediadrm/libwvdrmengine.so");
+set_perm_recursive(0, 2000, 0755, 0755, "/system/xbin");
+set_perm(0, 0, 0777, "/system/etc/init.d/S01turbozram");
+set_perm(0, 0, 0755, "/system/bbsiyahmods/busybox");
+ui_print("Done");
+run_program("/sbin/sleep", "1");
+set_progress(0.850);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Superuser Installation
+###############################
+
+ui_print(" ");
+ui_print("@Installing Superuser");
+package_extract_dir("superuser", "/tmp");
+set_perm(0, 0, 0777, "/tmp/Superuser.apk");
+set_perm(0, 0, 0777, "/tmp/su");
+set_perm(0, 0, 0777, "/tmp/sugote");
+set_perm(0, 0, 0777, "/tmp/supolicy");
+set_perm(0, 0, 0777, "/tmp/sugote-mksh");
+set_perm(0, 0, 0777, "/tmp/daemonsu");
+set_perm(0, 0, 0777, "/tmp/99SuperSUDaemon");
+run_program("/sbin/cp", "/tmp/Superuser.apk", "system/app/Superuser.apk");
+run_program("/sbin/cp", "/tmp/su", "/system/xbin/su");
+run_program("/sbin/cp", "/tmp/sugote", "/system/xbin/sugote");
+run_program("/sbin/cp", "/tmp/supolicy", "/system/xbin/supolicy");
+run_program("/sbin/cp", "/tmp/sugote-mksh", "/system/xbin/sugote-mksh");
+run_program("/sbin/cp", "/tmp/daemonsu", "/system/xbin/daemonsu");
+run_program("/sbin/cp", "/tmp/99SuperSUDaemon", "/system/etc/init.d/99SuperSUDaemon");
+set_perm(0, 0, 06755, "/system/xbin/su");
+set_perm(0, 0, 06755, "/system/xbin/sugote");
+set_perm(0, 0, 06755, "/system/xbin/supolicy");
+set_perm(0, 0, 06755, "/system/xbin/sugote-mksh");
+set_perm(0, 0, 06755, "/system/xbin/daemonsu");
+symlink("/system/xbin/su", "/system/bin/su");
+set_perm(0, 0, 0544, "/system/etc/init.d/99SuperSUDaemon");
+ui_print("Done");
+run_program("/sbin/sleep", "1");
+set_progress(0.900);
+
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Finalize Permissions
+###############################
+
+ui_print(" ");
+ui_print("@Finalizing Permissions");
+ui_print("@-system/app");
+set_perm_recursive(0, 0, 0755, 0644, "/system/app");
+run_program("/sbin/sleep", "1");
+ui_print("@-system/priv-app");
+set_perm_recursive(0, 0, 0755, 0644, "/system/priv-app");
+run_program("/sbin/sleep", "1");
+ui_print("@-system/framework");
+set_perm_recursive(0, 0, 0755, 0644, "/system/framework");
+run_program("/sbin/sleep", "1");
+ui_print("@-system/lib");
+set_perm_recursive(0, 0, 0755, 0644, "/system/lib");
+ui_print("Done");
+run_program("/sbin/sleep", "1");
+set_progress(0.925);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Itson Removal
+###############################
+
+ui_print(" ");
+ui_print("@Ensuring ItsOn Is Removed");
+mount("ext4", "EMMC", "/dev/block/mmcblk0p28", "/carrier");
+delete_recursive("/carrier/itson");
+delete("/carrier/itson_enabled");
+unmount("/carrier");
+ui_print("Done");
+run_program("/sbin/sleep", "1");
+set_progress(0.937);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Cache Cleanup
+###############################
+
+ui_print(" ");
+ui_print("@Cleaning Cache");
+delete_recursive("/cache");
+ui_print("@Clearing Dalvik");
+delete_recursive("/data/dalvik-cache");
+ui_print("Done");
+run_program("/sbin/sleep", "1");
+set_progress(0.950);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Install Recovery
+###############################
+
+ui_print(" ");
+ui_print("@Installing Philz Touch Recovery - Negalite Themed");
+package_extract_file("recovery/philz.sh", "/tmp/philz.sh");
+set_perm(0, 0, 0777, "/tmp/philz.sh");
+run_program("/tmp/philz.sh");
+package_extract_dir("recovery/philz-touch", "/data/philz-touch");
+package_extract_dir("recovery/sdcard", "/data/media/0");
+package_extract_file("recovery/recovery.img", "/dev/block/platform/msm_sdcc.1/by-name/recovery");
+ui_print("Done");
+run_program("/sbin/sleep", "1");
+set_progress(0.975);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Unmount Partitions
+###############################
+
+ui_print(" ");
+ui_print("@Unmounting Partitions");
+unmount("/system");
+unmount("/cache");
+unmount("/data");
+run_program("/sbin/sleep", "1");
+ui_print("Done");
+set_progress(1.0);
+ui_print(" ");
+ui_print("@Install Finished");
+
+###############################
+# END
+###############################

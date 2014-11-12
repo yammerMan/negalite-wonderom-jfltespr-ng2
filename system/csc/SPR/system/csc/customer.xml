@@ -1,0 +1,147 @@
+<?xml  version="1.0" encoding="UTF-8" ?>
+
+<CustomerData>
+
+  <GeneralInfo>
+
+    <CSCEdition>ED003</CSCEdition>
+
+    <Country>USA</Country>
+
+    <CountryISO>US</CountryISO>
+
+    <Region>NA</Region>
+
+    <SalesCode>SPR</SalesCode>
+
+    <NbNetworkInfo>1</NbNetworkInfo>
+
+    <NetworkInfo>
+
+      <MCCMNC>31000</MCCMNC>
+
+      <NetworkName>SPR</NetworkName>
+
+    </NetworkInfo>
+
+  </GeneralInfo>
+
+  <Settings>
+
+    <Main>
+
+      <Phone>
+
+        <DefLanguage>automatic</DefLanguage>
+
+        <DefLanguageNoSIM>english_us</DefLanguageNoSIM>
+        <ContinuousInput>enable</ContinuousInput>
+        <DateTimeFormat>
+
+          <DateFormat>mmddyyyy</DateFormat>
+          <TimeFormat>12h</TimeFormat>
+          <TimezoneUpdate>on</TimezoneUpdate>
+
+        </DateTimeFormat>
+
+      </Phone>
+      <Network>
+        <WbAmr>
+          <NetworkName>Sprint</NetworkName>
+          <WbAmrCodec>on</WbAmrCodec>
+        </WbAmr>
+	  </Network>
+    </Main>
+
+    <Messages>
+      <SMS>
+        <CharSupport>automatic</CharSupport>
+        <EmailGateway>6245</EmailGateway>
+        <MaxRecipient>40</MaxRecipient>
+        <MsgTypeThreshold>
+          <ThresholdValue>6</ThresholdValue>
+          <ThresholdType>pagecount</ThresholdType>
+        </MsgTypeThreshold>
+        <PreviewMessage>on</PreviewMessage>
+      </SMS>
+      <MMS>
+        <GroupMessaging>on</GroupMessaging> 
+        <MMSVersion>1.2</MMSVersion>
+        <MmsSending>
+          <ReqDeliveryRep>off</ReqDeliveryRep>
+          <ReqReadRep>off</ReqReadRep>
+          <MessageSize>1m</MessageSize>
+          <ImageResizeResolution>uxga</ImageResizeResolution>
+          <MaxRecipientMMS>40</MaxRecipientMMS>
+        </MmsSending>
+      </MMS>
+      <Email>
+        <EmailReceiving>
+          <PollTime>1H</PollTime>
+        </EmailReceiving>
+      </Email>
+    </Messages>
+
+    <ActiveSync>
+      <EasEmail>
+        	<SizeEmail>20K</SizeEmail>
+      </EasEmail>
+      <SyncSms>OFF</SyncSms>
+    </ActiveSync> 
+    
+    <Browser>
+      <NbBookmark>14</NbBookmark>
+
+      <Bookmark>
+
+        <Editable>yes</Editable>
+
+        <Index>1</Index>
+
+        <BookmarkName>Google</BookmarkName>
+
+        <URL>http://www.google.com/</URL>
+
+      </Bookmark>
+
+      <Bookmark>
+
+        <Editable>yes</Editable>
+
+        <Index>2</Index>
+
+        <BookmarkName>Negalite</BookmarkName>
+
+        <URL>http://www.negalite.com</URL>
+
+      </Bookmark>
+	  
+      <Bookmark>
+
+        <Editable>yes</Editable>
+
+        <Index>3</Index>
+
+        <BookmarkName>XDA-Developers S4 Sprint</BookmarkName>
+
+        <URL>http://forum.xda-developers.com/forumdisplay.php?f=2272</URL>
+
+      </Bookmark>
+
+      <Bookmark>
+
+        <Editable>yes</Editable>
+
+        <Index>4</Index>
+
+        <BookmarkName>XDA-Developers S4</BookmarkName>
+
+        <URL>http://forum.xda-developers.com/forumdisplay.php?f=2162</URL>
+
+      </Bookmark>	  
+
+    </Browser>
+
+  </Settings>
+
+</CustomerData>

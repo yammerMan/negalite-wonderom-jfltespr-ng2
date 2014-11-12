@@ -1,0 +1,161 @@
+<?xml  version="1.0" encoding="UTF-8" ?>
+<!-- It can be added for each operators like below form
+
+<ABC>                       -> sales code
+<sapient>true</sapient>         -> feature1
+<burton>false</burton>          -> feature2
+<libtech>true</libtech>         -> feature3
+.
+.
+</ABC>
+
+each name of tags are will be environment variable with "ro.csc."
+ex) "ro.csc.sapient", "ro.csc.burton", "ro.csc.libtech" <== you could use them at any section.
+also, should be added between <FeatureSet>
+ and </FeatureSet> .
+jhwan.kim@hdlnc.com  -->
+<SamsungMobileFeature>
+
+<Country></Country>
+<CountryISO></CountryISO>
+<SalesCode></SalesCode>
+
+<!-- XAS -->
+<FeatureSet>
+
+<!-- Common -->
+<CscFeature_Common_DisableMenu4GalSearch>contact</CscFeature_Common_DisableMenu4GalSearch>
+<CscFeature_Common_SweepOperationArea>ExcludeAvatar</CscFeature_Common_SweepOperationArea>
+
+<!-- Message -->
+
+<CscFeature_Message_MinSlideDuration>5</CscFeature_Message_MinSlideDuration>
+<CscFeature_Message_DisableMenuRequestMmsReadReport>true</CscFeature_Message_DisableMenuRequestMmsReadReport>
+<CscFeature_Message_DisableMenuSmsDeliveryReports>true</CscFeature_Message_DisableMenuSmsDeliveryReports>
+<CscFeature_Message_DisableMenuRequestMmsDeliveryReport>true</CscFeature_Message_DisableMenuRequestMmsDeliveryReport>
+<CscFeature_Message_DisableMenuWapPush>true</CscFeature_Message_DisableMenuWapPush>
+<CscFeature_Message_DisableMenuWapPushServiceLoading>true</CscFeature_Message_DisableMenuWapPushServiceLoading>
+<CscFeature_Message_DisableMenuMmsCreationMode>true</CscFeature_Message_DisableMenuMmsCreationMode>
+<CscFeature_Message_EnableLocalSymbolTable>false</CscFeature_Message_EnableLocalSymbolTable>
+<CscFeature_Message_EnableUnifiedMmsRetrieveMenu>false</CscFeature_Message_EnableUnifiedMmsRetrieveMenu>
+<CscFeature_Message_ReplaceLabel4RetreivedMsg>false</CscFeature_Message_ReplaceLabel4RetreivedMsg>
+<CscFeature_Message_EnableSmsSubject>true</CscFeature_Message_EnableSmsSubject>
+<CscFeature_Message_EnableAnonymousThread>false</CscFeature_Message_EnableAnonymousThread>
+<CscFeature_Message_EnableMesageAutoView>false</CscFeature_Message_EnableMesageAutoView>
+<CscFeature_Message_MmsModeCaptureVideoMaxSize>1018880</CscFeature_Message_MmsModeCaptureVideoMaxSize>
+<CscFeature_Message_MmsModeCaptureVideoBitRate>0</CscFeature_Message_MmsModeCaptureVideoBitRate>          <!-- 0 = use camcorder default value-->
+<CscFeature_Message_MmsModeCaptureVideoMaxDuration>0</CscFeature_Message_MmsModeCaptureVideoMaxDuration>  <!-- 0 = use camcorder default value-->
+<CscFeature_Message_MmsModeCaptureVideoResolution></CscFeature_Message_MmsModeCaptureVideoResolution>     <!-- "" = use camcorder default value-->
+<CscFeature_Message_EnableExtendSlideTimeToMediaDuration>true</CscFeature_Message_EnableExtendSlideTimeToMediaDuration>
+<CscFeature_Message_EnableSmsForwardPrefix>true</CscFeature_Message_EnableSmsForwardPrefix>
+<CscFeature_Message_SmsDiscardPrefix>//</CscFeature_Message_SmsDiscardPrefix>
+<CscFeature_Message_DisableMenuSIMMessages>true</CscFeature_Message_DisableMenuSIMMessages>
+<CscFeature_Message_DisableCopyToSim>true</CscFeature_Message_DisableCopyToSim>
+<CscFeature_Message_DisableMenuCBChannel>true</CscFeature_Message_DisableMenuCBChannel>
+<CscFeature_Message_DisableMenuSMSC>true</CscFeature_Message_DisableMenuSMSC>
+<CscFeature_Message_EnableSegmentedSMS>true</CscFeature_Message_EnableSegmentedSMS>
+<CscFeature_Message_DisableLogs>true</CscFeature_Message_DisableLogs>
+<CscFeature_Message_DisableMenuCBMessage>true</CscFeature_Message_DisableMenuCBMessage>
+<CscFeature_Message_DisableMenuSmsInputMode>true</CscFeature_Message_DisableMenuSmsInputMode>
+<CscFeature_Message_DisableSmscEditable>true</CscFeature_Message_DisableSmscEditable>
+<CscFeature_Message_CheckTelNumAreaCode>true</CscFeature_Message_CheckTelNumAreaCode>
+<CscFeature_Message_CMASOperator>us-spr</CscFeature_Message_CMASOperator>
+<CscFeature_Message_EnableRoamGuard>true</CscFeature_Message_EnableRoamGuard>
+<CscFeature_Message_MinRecipientLengthAs>3</CscFeature_Message_MinRecipientLengthAs>
+<CscFeature_Message_MaxRecipientLengthAs>17</CscFeature_Message_MaxRecipientLengthAs>
+
+<!-- Clock -->
+<CscFeature_Clock_EnableVolumeKeySetting>true</CscFeature_Clock_EnableVolumeKeySetting>
+
+<!-- Settings -->
+<CscFeature_Setting_DisableMenuFindMyMobile>true</CscFeature_Setting_DisableMenuFindMyMobile>
+<CscFeature_Settings_FindMyMobile>false</CscFeature_Settings_FindMyMobile>
+<CscFeature_Setting_EnableHwVersionDisplay>true</CscFeature_Setting_EnableHwVersionDisplay>
+<CscFeature_Setting_EnableConversion4MEIDAndESN>true</CscFeature_Setting_EnableConversion4MEIDAndESN>
+<CscFeature_Setting_EnableRoamingMenu>false</CscFeature_Setting_EnableRoamingMenu>
+
+<!-- NFC -->
+<CscFeature_NFC_SetSecureEventType>GOOGLE</CscFeature_NFC_SetSecureEventType>
+<CscFeature_SmartcardSvc_SetAccessControlType>NONE</CscFeature_SmartcardSvc_SetAccessControlType>
+<CscFeature_NFC_DefaultCardModeConfig>ESE</CscFeature_NFC_DefaultCardModeConfig>
+<CscFeature_NFC_SetOnAsDefault>TRUE</CscFeature_NFC_SetOnAsDefault>
+<CscFeature_NFC_CardModeRoutingTypeForEse>ROUTE_ON_WHEN_SCREEN_UNLOCK</CscFeature_NFC_CardModeRoutingTypeForEse>
+
+<!-- Camera -->
+<CscFeature_Camera_CameraFlicker>60hz</CscFeature_Camera_CameraFlicker>
+
+<!-- GMS -->
+<CscFeature_GMS_DisableSetupWizard>false</CscFeature_GMS_DisableSetupWizard>
+<CscFeature_GMS_ReplaceGMailBrandForGermany>false</CscFeature_GMS_ReplaceGMailBrandForGermany>
+
+<!-- Calendar -->
+<CscFeature_Calendar_SetColorOfDays>XXXXXXX</CscFeature_Calendar_SetColorOfDays>
+<CscFeature_Calendar_EnableShiftedWeekNumber>true</CscFeature_Calendar_EnableShiftedWeekNumber>
+
+<!-- KIES -->
+
+<!-- Contacts -->
+<CscFeature_Contact_DisableSIMContacts>true</CscFeature_Contact_DisableSIMContacts>
+<CscFeature_Contact_DoNotSaveEcc>true</CscFeature_Contact_DoNotSaveEcc>
+<CscFeature_Contact_ExtendSpeedDialTo100>true</CscFeature_Contact_ExtendSpeedDialTo100>
+<CscFeature_Contact_DisableSnsInfoInListView>true</CscFeature_Contact_DisableSnsInfoInListView>
+<CscFeature_Contact_DisableAccountIconsInContactList>true</CscFeature_Contact_DisableAccountIconsInContactList>
+<CscFeature_Contact_DisableCallDuration>true</CscFeature_Contact_DisableCallDuration>
+<CscFeature_Contact_DisableMessageLog>true</CscFeature_Contact_DisableMessageLog>
+<CscFeature_Contact_DisableMenuSimExportImport>true</CscFeature_Contact_DisableMenuSimExportImport>
+<CscFeature_Contact_SetPropertyForPreloadedContact>ReadOnly</CscFeature_Contact_SetPropertyForPreloadedContact>
+<CscFeature_Contact_RemoveActionBarTitle>true</CscFeature_Contact_RemoveActionBarTitle>
+<CscFeature_Contact_EnableBackupSvc4Ctc>true</CscFeature_Contact_EnableBackupSvc4Ctc>
+<CscFeature_Contact_ConfigTelNumType>RadioType</CscFeature_Contact_ConfigTelNumType>
+
+<!-- SEC Launcher -->
+<CscFeature_Launcher_DisableHelpUI>true</CscFeature_Launcher_DisableHelpUI>
+<CscFeature_Launcher_TotalPageCount>5</CscFeature_Launcher_TotalPageCount>
+<CscFeature_Launcher_DefaultPageNumber>2</CscFeature_Launcher_DefaultPageNumber>
+<CscFeature_Launcher_DisableTranslucency>true</CscFeature_Launcher_DisableTranslucency>
+<CscFeature_Launcher_EnableInegratedLauncher>true</CscFeature_Launcher_EnableInegratedLauncher>
+
+<!-- Common -->
+<CscFeature_Common_UseChameleon>true</CscFeature_Common_UseChameleon>
+
+<!-- WEB -->
+<CscFeature_Web_SetUserAgent>SPR</CscFeature_Web_SetUserAgent>
+<CscFeature_Web_SetUAProfile>http://device.sprintpcs.com/Samsung/%s/%s.rdf</CscFeature_Web_SetUAProfile>
+<CscFeature_Web_Bool_EnableDRM>true</CscFeature_Web_Bool_EnableDRM>
+<CscFeature_Web_SetHomepageURL>http://www.google.com/m?client=ms-hms-sprint-us&amp;channel=portal</CscFeature_Web_SetHomepageURL>
+<CscFeature_Web_Bool_DisableRSS>false</CscFeature_Web_Bool_DisableRSS>
+<CscFeature_Web_Bool_DisableVoiceSearch>false</CscFeature_Web_Bool_DisableVoiceSearch>
+<CscFeature_Web_Bool_DisableRedirectionChooser>false</CscFeature_Web_Bool_DisableRedirectionChooser>
+<CscFeature_Web_Bool_Disable_Chooser_For_APPLICATION_X_APPLICATIONFOLDER>false</CscFeature_Web_Bool_Disable_Chooser_For_APPLICATION_X_APPLICATIONFOLDER>
+<CscFeature_Web_Bool_StartWIFISettingInAirplaneMode>false</CscFeature_Web_Bool_StartWIFISettingInAirplaneMode>
+<CscFeature_Web_Bool_SkipSettingDefaultBookmarkImage>false</CscFeature_Web_Bool_SkipSettingDefaultBookmarkImage>
+<CscFeature_Web_Bool_EnableUAProfile>true</CscFeature_Web_Bool_EnableUAProfile>
+<CscFeature_Web_Bool_UAProfile_withVersion>true</CscFeature_Web_Bool_UAProfile_withVersion>
+<CscFeature_Web_Bool_RemoveVideoDownload>false</CscFeature_Web_Bool_RemoveVideoDownload>
+<CscFeature_Web_Bool_DisableSaveLink>false</CscFeature_Web_Bool_DisableSaveLink>
+<CscFeature_Web_Bool_EnableGateConfig>false</CscFeature_Web_Bool_EnableGateConfig>
+<CscFeature_Web_Bool_OverrideUserAgent>false</CscFeature_Web_Bool_OverrideUserAgent>
+<CscFeature_Web_Bool_EnableClearTodayHistory>false</CscFeature_Web_Bool_EnableClearTodayHistory>
+<CscFeature_Web_Bool_BlockChargeAtHighTemperature>true</CscFeature_Web_Bool_BlockChargeAtHighTemperature>
+<CscFeature_Web_EnableAutoSimHomeUrlInProfile>false</CscFeature_Web_EnableAutoSimHomeUrlInProfile>
+<CscFeature_Web_BlockZoomBaseOnTouchPosition>true</CscFeature_Web_BlockZoomBaseOnTouchPosition>
+
+<!-- SIP -->
+<CscFeature_Sip_DisableMenuKeyboardSwipe>true</CscFeature_Sip_DisableMenuKeyboardSwipe>
+<CscFeature_Sip_EnableContinuousInputInAllEditField>true</CscFeature_Sip_EnableContinuousInputInAllEditField>
+<CscFeature_Sip_DefaultMultiModalKeyAs>VOICE</CscFeature_Sip_DefaultMultiModalKeyAs>
+<CscFeature_Sip_EnableLanguageToggleButton>true</CscFeature_Sip_EnableLanguageToggleButton>
+<CscFeature_Sip_EnableSymbolInSecondary>en_US;es;es_US</CscFeature_Sip_EnableSymbolInSecondary>
+<CscFeature_Sip_KeepDefInputMethodAs>QWERTY</CscFeature_Sip_KeepDefInputMethodAs>
+<CscFeature_Sip_DisableAutoCorrection_DA>false</CscFeature_Sip_DisableAutoCorrection_DA>
+<CscFeature_Sip_ApplyAutoCorrectionPatent>true</CscFeature_Sip_ApplyAutoCorrectionPatent>
+
+<!-- Briefing -->
+<CscFeature_Briefing_CPConfig>sports:espn</CscFeature_Briefing_CPConfig>
+
+<!-- SPR Feature Flags -->
+<CscFeature_Common_EnableSprintExtension>true</CscFeature_Common_EnableSprintExtension>
+<CscFeature_Common_EnableItsOn>true</CscFeature_Common_EnableItsOn>
+
+</FeatureSet>
+</SamsungMobileFeature>
